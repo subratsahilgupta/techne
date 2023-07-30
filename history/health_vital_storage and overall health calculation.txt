@@ -1,0 +1,227 @@
+1 --------------APPENDING THE VALUES AT THE BEGINNING OF THE LINK LIST--------------------------------------
+
+
+class HealthParams:
+    def __init__(self, value):
+        self.value = value
+        self.next = None
+
+class HealthVitalsLinkedList:
+    def __init__(self):
+        self.head = None
+
+    def prepend(self, value):
+        new_node = HealthParams(value)
+        new_node.next = self.head
+        self.head = new_node
+
+def get_float_input(prompt):
+    while True:
+        try:
+            value = float(input(prompt))
+            return value
+        except ValueError:
+            print("Invalid input. Please enter a valid number.")
+
+def main():
+    heart_rate_list = HealthVitalsLinkedList()
+    sleep_duration_list = HealthVitalsLinkedList()
+    systolic_bp_list = HealthVitalsLinkedList()
+    diastolic_bp_list = HealthVitalsLinkedList()
+    stress_level_list = HealthVitalsLinkedList()
+    fitness_score_list = HealthVitalsLinkedList()
+
+    while True:
+        heart_rate = get_float_input("Enter Heart Rate: ")
+        sleep_duration = get_float_input("Enter Sleep Duration: ")
+        systolic_bp = get_float_input("Enter Systolic Blood Pressure: ")
+        diastolic_bp = get_float_input("Enter Diastolic Blood Pressure: ")
+        stress_level = get_float_input("Enter Stress Level: ")
+        fitness_score = get_float_input("Enter Fitness Score: ")
+
+        heart_rate_list.prepend(heart_rate)
+        sleep_duration_list.prepend(sleep_duration)
+        systolic_bp_list.prepend(systolic_bp)
+        diastolic_bp_list.prepend(diastolic_bp)
+        stress_level_list.prepend(stress_level)
+        fitness_score_list.prepend(fitness_score)
+
+        choice = input("Do you want to enter more health parameters? (y/n): ")
+        if choice.lower() != 'y':
+            break
+
+    # Display the linked lists for each health vital
+    def display_linked_list(linked_list, health_vital_name):
+        current = linked_list.head
+        while current:
+            print(f"{health_vital_name}: {current.value}")
+            current = current.next
+        print()
+
+    display_linked_list(heart_rate_list, "Heart Rate")
+    display_linked_list(sleep_duration_list, "Sleep Duration")
+    display_linked_list(systolic_bp_list, "Systolic Blood Pressure")
+    display_linked_list(diastolic_bp_list, "Diastolic Blood Pressure")
+    display_linked_list(stress_level_list, "Stress Level")
+    display_linked_list(fitness_score_list, "Fitness Score")
+
+if __name__ == "__main__":
+    main()
+
+
+
+
+
+
+
+
+
+
+---------OUTPUT----------
+
+
+
+
+
+Enter Heart Rate: 75
+Enter Sleep Duration: 7.5
+Enter Systolic Blood Pressure: 120
+Enter Diastolic Blood Pressure: 80
+Enter Stress Level: 5
+Enter Fitness Score: 8
+
+Do you want to enter more health parameters? (y/n): y
+Enter Heart Rate: 80
+Enter Sleep Duration: 8
+Enter Systolic Blood Pressure: 130
+Enter Diastolic Blood Pressure: 85
+Enter Stress Level: 6
+Enter Fitness Score: 7
+
+Do you want to enter more health parameters? (y/n): n
+
+Heart Rate: 80.0
+Heart Rate: 75.0
+
+Sleep Duration: 8.0
+Sleep Duration: 7.5
+
+Systolic Blood Pressure: 130.0
+Systolic Blood Pressure: 120.0
+
+Diastolic Blood Pressure: 85.0
+Diastolic Blood Pressure: 80.0
+
+Stress Level: 6.0
+Stress Level: 5.0
+
+Fitness Score: 7.0
+Fitness Score: 8.0
+
+
+
+
+
+
+
+2 --------------------------GETTING THE INPUT FROM THE USER TO SHOW HIS OVERALL HEALTH BASED ON THE RECENT FIT SCORES------------------
+
+
+
+
+
+
+
+
+class HealthParams:
+    def __init__(self, value):
+        self.value = value
+        self.next = None
+
+class HealthVitalsLinkedList:
+    def __init__(self):
+        self.head = None
+
+    def prepend(self, value):
+        new_node = HealthParams(value)
+        new_node.next = self.head
+        self.head = new_node
+
+class FitnessScoreLinkedList:
+    def __init__(self):
+        self.head = None
+
+    def prepend(self, value):
+        new_node = HealthParams(value)
+        new_node.next = self.head
+        self.head = new_node
+
+def get_float_input(prompt):
+    while True:
+        try:
+            value = float(input(prompt))
+            return value
+        except ValueError:
+            print("Invalid input. Please enter a valid number.")
+
+def calculate_fitness_score(heart_rate, sleep_duration, systolic_bp, diastolic_bp, stress_level):
+    # Customize your fitness score calculation logic here
+    # For this example, we will use a simple average of the health vitals
+    return (heart_rate + sleep_duration + systolic_bp + diastolic_bp + stress_level) / 5
+
+def main():
+    fit_score_list = FitnessScoreLinkedList()
+
+    while True:
+        heart_rate = get_float_input("Enter Heart Rate: ")
+        sleep_duration = get_float_input("Enter Sleep Duration: ")
+        systolic_bp = get_float_input("Enter Systolic Blood Pressure: ")
+        diastolic_bp = get_float_input("Enter Diastolic Blood Pressure: ")
+        stress_level = get_float_input("Enter Stress Level: ")
+
+        fit_score = calculate_fitness_score(heart_rate, sleep_duration, systolic_bp, diastolic_bp, stress_level)
+        fit_score_list.prepend(fit_score)
+
+        choice = input("Do you want to enter more health parameters? (y/n): ")
+        if choice.lower() != 'y':
+            break
+
+    n = int(input("Enter the number of recent fit scores you want to consider: "))
+
+    # Get the recent fit scores based on the user's input 'n'
+    recent_fit_scores = fit_score_list.get_recent_fit_scores(n)
+
+    # Calculate the overall health based on the most recent 'n' fit scores
+    overall_health = sum(recent_fit_scores) / len(recent_fit_scores) if recent_fit_scores else 0.0
+    print(f"Your overall health based on the most recent {n} fit scores is: {overall_health:.2f}")
+
+if __name__ == "__main__":
+    main()
+
+
+
+
+
+
+------------------OUTPUT---------------------------------------------
+
+
+
+
+Enter Heart Rate: 75
+Enter Sleep Duration: 7.5
+Enter Systolic Blood Pressure: 120
+Enter Diastolic Blood Pressure: 80
+Enter Stress Level: 5
+
+Do you want to enter more health parameters? (y/n): y
+Enter Heart Rate: 80
+Enter Sleep Duration: 8
+Enter Systolic Blood Pressure: 130
+Enter Diastolic Blood Pressure: 85
+Enter Stress Level: 6
+
+Do you want to enter more health parameters? (y/n): n
+Enter the number of recent fit scores you want to consider: 3
+Your overall health based on the most recent 3 fit scores is: 5.30
+

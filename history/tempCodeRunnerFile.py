@@ -1,0 +1,1 @@
+fitness_score_list = HealthVitalsLinkedList()
